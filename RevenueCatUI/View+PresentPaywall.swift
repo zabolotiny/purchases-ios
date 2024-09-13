@@ -350,6 +350,7 @@ extension View {
         introEligibility: TrialOrIntroEligibilityChecker? = nil,
         purchaseHandler: PurchaseHandler? = nil,
         presentationMode: PaywallPresentationMode = .default,
+        displayCloseButton: Bool = true,
         myAppPurchaseLogic: MyAppPurchaseLogic? = nil,
         shouldDisplay: @escaping @Sendable (CustomerInfo) -> Bool,
         purchaseStarted: PurchaseOfPackageStartedHandler? = nil,
@@ -367,6 +368,7 @@ extension View {
                 shouldDisplay: shouldDisplay,
                 myAppPurchaseLogic: myAppPurchaseLogic,
                 presentationMode: presentationMode,
+                displayCloseButton: displayCloseButton,
                 purchaseStarted: purchaseStarted,
                 purchaseCompleted: purchaseCompleted,
                 purchaseCancelled: purchaseCancelled,
@@ -396,6 +398,7 @@ private struct PresentingPaywallModifier: ViewModifier {
     }
 
     var shouldDisplay: @Sendable (CustomerInfo) -> Bool
+    var displayCloseButton: Bool
     var presentationMode: PaywallPresentationMode
     var purchaseStarted: PurchaseOfPackageStartedHandler?
     var purchaseCompleted: PurchaseOrRestoreCompletedHandler?
@@ -416,6 +419,7 @@ private struct PresentingPaywallModifier: ViewModifier {
         shouldDisplay: @escaping @Sendable (CustomerInfo) -> Bool,
         myAppPurchaseLogic: MyAppPurchaseLogic?,
         presentationMode: PaywallPresentationMode,
+        displayCloseButton: Bool,
         purchaseStarted: PurchaseOfPackageStartedHandler?,
         purchaseCompleted: PurchaseOrRestoreCompletedHandler?,
         purchaseCancelled: PurchaseCancelledHandler?,
@@ -439,6 +443,7 @@ private struct PresentingPaywallModifier: ViewModifier {
         self.restoreCompleted = restoreCompleted
         self.purchaseFailure = purchaseFailure
         self.restoreFailure = restoreFailure
+        self.displayCloseButton = displayCloseButton
         self.onDismiss = onDismiss
         self.content = content
         self.fontProvider = fontProvider
@@ -491,7 +496,7 @@ private struct PresentingPaywallModifier: ViewModifier {
                 content: self.content,
                 customerInfo: data.customerInfo,
                 fonts: self.fontProvider,
-                displayCloseButton: true,
+                displayCloseButton: self.displayCloseButton,
                 introEligibility: self.introEligibility,
                 purchaseHandler: self.purchaseHandler
             )
@@ -521,7 +526,7 @@ private struct PresentingPaywallModifier: ViewModifier {
         .onRestoreFailure {
             self.restoreFailure?($0)
         }
-        .interactiveDismissDisabled(self.purchaseHandler.actionInProgress)
+        .interactiveDismissDisabled(self.purchaseHandler.actionInProgress || !self.displayCloseButton)
     }
 
     private func close() {
