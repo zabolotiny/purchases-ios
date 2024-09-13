@@ -99,6 +99,7 @@ extension View {
         offering: Offering? = nil,
         fonts: PaywallFontProvider = DefaultPaywallFontProvider(),
         presentationMode: PaywallPresentationMode = .default,
+        displayCloseButton: Bool,
         purchaseStarted: @escaping PurchaseStartedHandler,
         purchaseCompleted: PurchaseOrRestoreCompletedHandler? = nil,
         purchaseCancelled: PurchaseCancelledHandler? = nil,
@@ -112,6 +113,7 @@ extension View {
             offering: offering,
             fonts: fonts,
             presentationMode: presentationMode,
+            displayCloseButton: displayCloseButton,
             purchaseStarted: { _ in
                 purchaseStarted()
             },
@@ -151,6 +153,7 @@ extension View {
         offering: Offering? = nil,
         fonts: PaywallFontProvider = DefaultPaywallFontProvider(),
         presentationMode: PaywallPresentationMode = .default,
+        displayCloseButton: Bool,
         myAppPurchaseLogic: MyAppPurchaseLogic? = nil,
         purchaseStarted: PurchaseOfPackageStartedHandler? = nil,
         purchaseCompleted: PurchaseOrRestoreCompletedHandler? = nil,
@@ -165,6 +168,7 @@ extension View {
             offering: offering,
             fonts: fonts,
             presentationMode: presentationMode,
+            displayCloseButton: displayCloseButton,
             myAppPurchaseLogic: myAppPurchaseLogic,
             shouldDisplay: { info in
                 !info.entitlements
@@ -230,6 +234,7 @@ extension View {
         offering: Offering? = nil,
         fonts: PaywallFontProvider = DefaultPaywallFontProvider(),
         presentationMode: PaywallPresentationMode = .default,
+        displayCloseButton: Bool,
         myAppPurchaseLogic: MyAppPurchaseLogic? = nil,
         shouldDisplay: @escaping @Sendable (CustomerInfo) -> Bool,
         purchaseStarted: @escaping PurchaseStartedHandler,
@@ -244,6 +249,7 @@ extension View {
             offering: offering,
             fonts: fonts,
             presentationMode: presentationMode,
+            displayCloseButton: displayCloseButton,
             myAppPurchaseLogic: myAppPurchaseLogic,
             shouldDisplay: shouldDisplay,
             purchaseStarted: { _ in
@@ -308,6 +314,7 @@ extension View {
         offering: Offering? = nil,
         fonts: PaywallFontProvider = DefaultPaywallFontProvider(),
         presentationMode: PaywallPresentationMode = .default,
+        displayCloseButton: Bool,
         myAppPurchaseLogic: MyAppPurchaseLogic? = nil,
         shouldDisplay: @escaping @Sendable (CustomerInfo) -> Bool,
         purchaseStarted: PurchaseOfPackageStartedHandler? = nil,
@@ -323,6 +330,7 @@ extension View {
             offering: offering,
             fonts: fonts,
             presentationMode: presentationMode,
+            displayCloseButton: displayCloseButton,
             myAppPurchaseLogic: myAppPurchaseLogic,
             shouldDisplay: shouldDisplay,
             purchaseStarted: purchaseStarted,
@@ -350,7 +358,7 @@ extension View {
         introEligibility: TrialOrIntroEligibilityChecker? = nil,
         purchaseHandler: PurchaseHandler? = nil,
         presentationMode: PaywallPresentationMode = .default,
-        displayCloseButton: Bool = true,
+        displayCloseButton: Bool,
         myAppPurchaseLogic: MyAppPurchaseLogic? = nil,
         shouldDisplay: @escaping @Sendable (CustomerInfo) -> Bool,
         purchaseStarted: PurchaseOfPackageStartedHandler? = nil,
